@@ -184,8 +184,8 @@ main() {
   start_postgres 2> /dev/null
   add_databases_to_bucardo
   add_syncs_to_bucardo
-  start_bucardo
-  bucardo_status
+  # start_bucardo
+  # bucardo_status
 }
 
 main

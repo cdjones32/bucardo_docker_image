@@ -8,7 +8,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update \
     && apt-get -y upgrade
 
-RUN apt-get -y install postgresql-14 jq wget curl perl make build-essential bucardo
+RUN apt-get -y install jq wget curl perl make build-essential locales
+
+RUN locale-gen en_US en_US.UTF-8 && \
+    dpkg-reconfigure locales && \
+    update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+    sh -c "echo 'LC_ALL=en_US.UTF-8\nLANG=en_US.UTF-8' >> /etc/environment"
+
+RUN apt-get -y install postgresql-14 bucardo
 
 ARG BUCARDO_VERSION=5.6.0
 
